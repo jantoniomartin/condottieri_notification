@@ -1,0 +1,14 @@
+`condottieri_notification` is a Django application that implements a new backend for `pinax-notifications`.
+
+This application stores notices in the database, using a `Notice` model, so that the user can see a list of notices. This model has been taken from the old `django-notification`.
+
+Usage
+-----
+
+First, add `condottieri_notification` to `settings.INSTALLED_APPS`.
+
+Then, add the following item to `settings.PINAX_NOTIFICATIONS_BACKENDS`:
+
+`('on site', 'condottieri_notification.backends.SiteBackend')`
+
+And last, include `condottieri_notification.urls` in your urls.
