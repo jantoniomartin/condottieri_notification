@@ -11,7 +11,7 @@ from condottieri_notification.models import Notice
 class NoticesListView(ListView):
     model = Notice
     context_object_name = 'notices'
-    template_name = 'pinax/notifications/notices.html'
+    #template_name = 'pinax/notifications/notices.html'
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

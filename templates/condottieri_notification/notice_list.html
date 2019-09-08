@@ -1,0 +1,45 @@
+{% extends "pinax/notifications/base.html" %}
+
+{% load humanize %}
+{% load i18n %}
+{# load timezone_filters #}
+{% load tz %}
+
+{% block head_title %}{% trans "Notices" %}{% endblock %}
+
+{% block main_content  %}
+    
+    <h1>{% trans "Notices" %}</h1>
+    
+    {# autopaginate notices #}
+    
+    {% if notices %}
+        <a href="{% url "condottieri_notification_mark_all_seen" %}">{% trans "Mark all unseen notices seen" %}</a>
+        
+        {# TODO: get timezone support working with regroup #}
+        {% regroup notices by added.date as notices_by_date %}
+        
+        {% for date in notices_by_date %}
+            <h3 class="notice_date">{{ date.grouper|naturalday:_("MONTH_DAY_FORMAT")|capfirst }}</h3>
+            <div class="notice_list"> 
+            {% for notice in date.list %}
+                {% if notice.is_unseen %}
+                    <div class="unseen_notice">
+                {% else %}
+                    <div class="notice">
+                {% endif %}
+                    <span class="notice_type">{% trans notice.notice_type.display %}</span>
+                    <span class="notice_message">{{ notice.message|safe }}</span>
+                    <span class="notice_time">{{ notice.added|localtime|time:"P" }}</span>
+                </div>
+            {% endfor %}
+	    </div>
+        {% endfor %}
+        
+        {# paginate #}
+        
+    {% else %}
+        <p>{% trans "No notices." %}</p>
+    {% endif %}
+    
+{% endblock %}
