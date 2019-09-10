@@ -22,9 +22,9 @@ class Migration(migrations.Migration):
                 ('added', models.DateTimeField(default=datetime.datetime.now, verbose_name='added')),
                 ('unseen', models.BooleanField(default=True, verbose_name='unseen')),
                 ('archived', models.BooleanField(default=False, verbose_name='archived')),
-                ('notice_type', models.ForeignKey(verbose_name='notice type', to='notifications.NoticeType')),
-                ('recipient', models.ForeignKey(related_name='received_notices', verbose_name='recipient', to=settings.AUTH_USER_MODEL)),
-                ('sender', models.ForeignKey(related_name='sent_notices', verbose_name='sender', to=settings.AUTH_USER_MODEL, null=True)),
+                ('notice_type', models.ForeignKey(verbose_name='notice type', to='notifications.NoticeType', on_delete=models.CASCADE)),
+                ('recipient', models.ForeignKey(related_name='received_notices', verbose_name='recipient', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
+                ('sender', models.ForeignKey(related_name='sent_notices', verbose_name='sender', to=settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ['-added'],

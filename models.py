@@ -24,12 +24,12 @@ class NoticeManager(models.Manager):
 
 class Notice(models.Model):
     recipient = models.ForeignKey(User, related_name="received_notices",
-        verbose_name=_("recipient"))
+        verbose_name=_("recipient"), on_delete=models.CASCADE)
     sender = models.ForeignKey(User, null=True, related_name="sent_notices",
-        verbose_name=_("sender"))
+        verbose_name=_("sender"), on_delete=models.CASCADE)
     message = models.TextField(_("message"))
     notice_type = models.ForeignKey(notifications.NoticeType,
-        verbose_name=_("notice type"))
+        verbose_name=_("notice type"), on_delete=models.CASCADE)
     added = models.DateTimeField(_("added"), default=datetime.datetime.now)
     unseen = models.BooleanField(_("unseen"), default=True)
     archived = models.BooleanField(_("archived"), default=False)
